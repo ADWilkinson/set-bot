@@ -1,0 +1,16 @@
+{
+  "name": "set-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord-webhook-node": "^1.1.8",
+    "node-cron": "^3.0.0",
+    "scraperapi-sdk": "^1.0.6"
+  }
+}
