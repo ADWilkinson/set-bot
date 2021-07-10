@@ -123,31 +123,19 @@ const runPostMessageToDiscord = async (message) => {
   }
 };
 
-const runProcess = async () => {
-  await runScrape();
-  await runReports();
-
-  setTimeout(async () => {
-    const message = await runGetMessage();
-    await runPostMessageToDiscord(message);
-  }, 5000);
-};
-
-runProcess()
-  .then((res) => console.log(res))
-  .catch((err) => console.log(err));
-
-cron.schedule('0 */4 * * *', () => {
+const task1 = cron.schedule('0 */4 * * *', async () => {
   console.log('running a task every minute');
   await runScrape();
 });
 
-cron.schedule('5 */4 * * *', () => {
+const task2 = cron.schedule('5 */4 * * *', async () => {
   console.log('running a task every minute');
   await runReports();
 });
 
-cron.schedule('10 */4 * * *', () => {
+const task3 = cron.schedule('10 */4 * * *', async () => {
   const message = await runGetMessage();
   await runPostMessageToDiscord(message);
 });
+
+console.log(task1, task2, task3);
