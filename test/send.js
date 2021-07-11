@@ -9,9 +9,9 @@ var cron = require('node-cron');
 
 const runGetMessage = async () => {
   let message = '';
-  var files = fs.readdirSync('./report');
+  var files = fs.readdirSync('../report');
   const reportArr = files.map((file) => {
-    return JSON.parse(fs.readFileSync('./report/' + file, 'utf8'));
+    return JSON.parse(fs.readFileSync('../report/' + file, 'utf8'));
   });
 
   const sortedArr = reportArr.sort((a, b) => parseFloat(b.priceChange) - parseFloat(a.priceChange));

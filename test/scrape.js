@@ -13,7 +13,7 @@ const runScrape = async () => {
       });
       console.log(page);
 
-      fs.writeFile('./scrapingData/' + key + '.txt', page, (err) => {
+      fs.writeFile('../scrapingData/' + key + '.txt', page, (err) => {
         if (err) {
           console.error(err);
           return;

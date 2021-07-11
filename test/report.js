@@ -14,10 +14,10 @@ const diff = (a, b) => {
 };
 
 const runReports = async () => {
-  var files = fs.readdirSync('./scrapingData').map((file) => file.replace('.txt', ''));
+  var files = fs.readdirSync('../scrapingData').map((file) => file.replace('.txt', ''));
 
   files.forEach((set) => {
-    fs.readFile('./scrapingData/' + set + '.txt', 'utf8', (err, data) => {
+    fs.readFile('../scrapingData/' + set + '.txt', 'utf8', (err, data) => {
       if (err) {
         console.error(err);
         return;
@@ -36,7 +36,7 @@ const runReports = async () => {
       console.log(convertedTokenPrice);
 
       try {
-        const report = JSON.parse(fs.readFileSync('./report/' + set + '.json', 'utf8'));
+        const report = JSON.parse(fs.readFileSync('../report/' + set + '.json', 'utf8'));
 
         console.log(report);
         let result = {
@@ -47,7 +47,7 @@ const runReports = async () => {
           priceChange: diff(convertedTokenPrice, report.price) + '%',
         };
         console.log(result);
-        fs.writeFile('./report/' + set + '.json', JSON.stringify(result), (err) => {
+        fs.writeFile('../report/' + set + '.json', JSON.stringify(result), (err) => {
           if (err) {
             console.error(err);
             return;
@@ -62,7 +62,7 @@ const runReports = async () => {
           priceChange: '0%',
         };
         console.log(result);
-        fs.writeFile('./report/' + set + '.json', JSON.stringify(result), (err) => {
+        fs.writeFile('../report/' + set + '.json', JSON.stringify(result), (err) => {
           if (err) {
             console.error(err);
             return;
