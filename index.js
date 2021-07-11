@@ -27,7 +27,11 @@ const runScrape = async () => {
 const diff = (a, b) => {
   let numA = parseFloat(a.replace('$', ''));
   let numB = parseFloat(b.replace('$', ''));
-  return ((numA - numB / numB) * 100).toFixed(2);
+
+  let increase = numA - numB;
+  increase = increase / numB;
+  let percent = increase * 100;
+  return percent.toFixed(2);
 };
 
 const runReports = async () => {
@@ -42,7 +46,6 @@ const runReports = async () => {
 
       const length = 15;
       const aumIndex = data.indexOf('>$');
-
 
       // not sure i want to include this yet
       // const aum = data.substr(aumIndex, length);
