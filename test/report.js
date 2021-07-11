@@ -3,27 +3,9 @@ const fs = require('fs');
 const map = require('./addressMap');
 const { Webhook } = require('discord-webhook-node');
 const hook = new Webhook(
-  'https://discord.com/api/webhooks/863667320077680690/nURYUFO_2Gaq-TZyxU8MHDDhkTrl9XaviihDsolQvAH6CNJ_Y6G7QXnyj9nyBC4bdYtr'
+  'https://discord.com/api/webhooks/863477263928262656/FBbtS8RxgU6GT-ICODLN_F3ePVeUfvzB7AaNyRJtOG5J9wYEX0oc2KyC1Q9hSnYLqC3d'
 );
 var cron = require('node-cron');
-
-const runScrape = async () => {
-  Object.keys(map.addressMap).forEach(async (key, index) => {
-    setTimeout(async function () {
-      const page = await scraperClient.get('https://www.tokensets.com/v2/set/' + key, {
-        render: true,
-      });
-      console.log(page);
-
-      fs.writeFile('./scrapingData/' + key + '.txt', page, (err) => {
-        if (err) {
-          console.error(err);
-          return;
-        }
-      });
-    }, index * 1000);
-  });
-};
 
 const diff = (a, b) => {
   let numA = parseFloat(a.replace('$', ''));
@@ -91,51 +73,8 @@ const runReports = async () => {
   });
 };
 
-const runGetMessage = async () => {
-  let message = '';
-  var files = fs.readdirSync('./report');
-  const reportArr = files.map((file) => {
-    return JSON.parse(fs.readFileSync('./report/' + file, 'utf8'));
-  });
-
-  const sortedArr = reportArr.sort((a, b) => parseFloat(b.priceChange) - parseFloat(a.priceChange));
-
-  message += '**Set Performance Leaderboard** 📈\n\n';
-  sortedArr.forEach((set, index) => {
-    if (index == 0) {
-      message += `🥇 **${set.name}**\nPrice: ${set.price} -- Change (%): ${set.priceChange} | AUM: ${set.aum} -- Change (%): ${set.aumChange}\n`;
-    } else if (index == 1) {
-      message += `🥈 **${set.name}**\nPrice: ${set.price} -- Change (%): ${set.priceChange} | AUM: ${set.aum} -- Change (%): ${set.aumChange}\n`;
-    } else if (index == 2) {
-      message += `🥉 **${set.name}**\nPrice: ${set.price} -- Change (%): ${set.priceChange} | AUM: ${set.aum} -- Change (%): ${set.aumChange}\n`;
-    } else {
-      message += `**${set.name}**\nPrice: ${set.price} -- Change (%): ${set.priceChange} | AUM: ${set.aum} -- Change (%): ${set.aumChange}\n`;
-    }
-  });
-  return message;
-};
-
-const runPostMessageToDiscord = async (message) => {
-  try {
-    await hook.send(message);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const task1 = cron.schedule('0 */4 * * *', async () => {
-  console.log('running a task every minute');
-  await runScrape();
-});
-
-const task2 = cron.schedule('5 */4 * * *', async () => {
-  console.log('running a task every minute');
+const runProcess = async () => {
   await runReports();
-});
+};
 
-const task3 = cron.schedule('10 */4 * * *', async () => {
-  const message = await runGetMessage();
-  await runPostMessageToDiscord(message);
-});
-
-console.log(task1, task2, task3);
+runProcess.then((res) => console.log(res)).catch((error) => console.log(error));
