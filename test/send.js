@@ -44,4 +44,4 @@ const runProcess = async () => {
   await runPostMessageToDiscord(message);
 };
 
-runProcess.then((res) => console.log(res)).catch((error) => console.log(error));
+runProcess().then((res) => console.log(res)).catch((error) => console.log(error));
