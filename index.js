@@ -42,9 +42,12 @@ const runReports = async () => {
 
       const length = 15;
       const aumIndex = data.indexOf('>$');
-      const aum = data.substr(aumIndex, length);
-      const convertedAum = '$' + aum.replace(',', '').match(/[\d\.\,]+/)[0];
-      console.log(convertedAum);
+
+
+      // not sure i want to include this yet
+      // const aum = data.substr(aumIndex, length);
+      // const convertedAum = '$' + aum.replace(',', '').match(/[\d\.\,]+/)[0];
+      // console.log(convertedAum);
 
       const slice = data.slice(aumIndex + length, data.length);
       const tokenPriceIndex = slice.indexOf('>$');
@@ -58,9 +61,9 @@ const runReports = async () => {
         console.log(report);
         let result = {
           name: map.addressMap[set],
-          aum: convertedAum,
+          // aum: convertedAum,
           price: convertedTokenPrice,
-          aumChange: diff(convertedAum, report.aum),
+          // aumChange: diff(convertedAum, report.aum),
           priceChange: diff(convertedTokenPrice, report.price) + '%',
         };
         console.log(result);
@@ -73,9 +76,9 @@ const runReports = async () => {
       } catch (error) {
         let result = {
           name: map.addressMap[set],
-          aum: convertedAum,
+          // aum: convertedAum,
           price: convertedTokenPrice,
-          aumChange: '0%',
+          // aumChange: '0%',
           priceChange: '0%',
         };
         console.log(result);
@@ -101,14 +104,15 @@ const runGetMessage = async () => {
 
   message += '**Set Performance Leaderboard** 📈\n\n';
   sortedArr.forEach((set, index) => {
+    // for aum | AUM: ${set.aum} -- Change (%): ${set.aumChange}\n
     if (index == 0) {
-      message += `🥇 **${set.name}**\nPrice: ${set.price} -- Change (%): ${set.priceChange} | AUM: ${set.aum} -- Change (%): ${set.aumChange}\n`;
+      message += `🥇 **${set.name}**\nPrice: ${set.price} | Change (%): ${set.priceChange}\n`;
     } else if (index == 1) {
-      message += `🥈 **${set.name}**\nPrice: ${set.price} -- Change (%): ${set.priceChange} | AUM: ${set.aum} -- Change (%): ${set.aumChange}\n`;
+      message += `🥈 **${set.name}**\nPrice: ${set.price} | Change (%): ${set.priceChange}\n`;
     } else if (index == 2) {
-      message += `🥉 **${set.name}**\nPrice: ${set.price} -- Change (%): ${set.priceChange} | AUM: ${set.aum} -- Change (%): ${set.aumChange}\n`;
+      message += `🥉 **${set.name}**\nPrice: ${set.price} | Change (%): ${set.priceChange}\n`;
     } else {
-      message += `**${set.name}**\nPrice: ${set.price} -- Change (%): ${set.priceChange} | AUM: ${set.aum} -- Change (%): ${set.aumChange}\n`;
+      message += `**${set.name}**\nPrice: ${set.price} | Change (%): ${set.priceChange}\n`;
     }
   });
   return message;
