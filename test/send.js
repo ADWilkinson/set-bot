@@ -1,6 +1,6 @@
 const scraperClient = require('scraperapi-sdk')('d668ceea885d0125abbd1a112775c6a1');
 const fs = require('fs');
-const map = require('./addressMap');
+const map = require('../addressMap');
 const { Webhook } = require('discord-webhook-node');
 const hook = new Webhook(
   'https://discord.com/api/webhooks/863477263928262656/FBbtS8RxgU6GT-ICODLN_F3ePVeUfvzB7AaNyRJtOG5J9wYEX0oc2KyC1Q9hSnYLqC3d'
