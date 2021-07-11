@@ -115,28 +115,31 @@ const runGetMessage = async () => {
   return message;
 };
 
-const runPostMessageToDiscord = async (message) => {
+const runPostMessageToDiscord = async (message, webhook) => {
   try {
-    await hook.send(message);
+    await webhook.send(message);
   } catch (error) {
     console.log(error);
   }
 };
 
-const task1 = cron.schedule('0 */4 * * *', async () => {
+cron.schedule('0 */4 * * *', async () => {
   console.log('-- RUNNING SCRAPING SERVICE --');
   await runScrape();
 });
 
-const task2 = cron.schedule('5 */4 * * *', async () => {
+cron.schedule('5 */4 * * *', async () => {
   console.log('-- RUNNING REPORT SERVICE --');
   await runReports();
 });
 
-const task3 = cron.schedule('10 */4 * * *', async () => {
-    console.log('-- RUNNING MESSAGE SERVICE --');
+cron.schedule('10 */4 * * *', async () => {
+  console.log('-- RUNNING MESSAGE SERVICE --');
   const message = await runGetMessage();
-  await runPostMessageToDiscord(message);
+  await runPostMessageToDiscord(message, hook);
 });
 
-console.log(task1, task2, task3);
+exports.runScrape = runScrape;
+exports.runReports = runReports;
+exports.runGetMessage = runGetMessage;
+exports.runPostMessageToDiscord = runPostMessageToDiscord;
