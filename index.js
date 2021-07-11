@@ -124,16 +124,17 @@ const runPostMessageToDiscord = async (message) => {
 };
 
 const task1 = cron.schedule('0 */4 * * *', async () => {
-  console.log('running a task every minute');
+  console.log('-- RUNNING SCRAPING SERVICE --');
   await runScrape();
 });
 
 const task2 = cron.schedule('5 */4 * * *', async () => {
-  console.log('running a task every minute');
+  console.log('-- RUNNING REPORT SERVICE --');
   await runReports();
 });
 
 const task3 = cron.schedule('10 */4 * * *', async () => {
+    console.log('-- RUNNING MESSAGE SERVICE --');
   const message = await runGetMessage();
   await runPostMessageToDiscord(message);
 });
