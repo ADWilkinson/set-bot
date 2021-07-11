@@ -27,7 +27,7 @@ const runScrape = async () => {
 const diff = (a, b) => {
   let numA = parseFloat(a.replace('$', ''));
   let numB = parseFloat(b.replace('$', ''));
-  return ((100 * (numB - numA)) / ((numB + numA) / 2)).toFixed(2);
+  return ((numA - numB / numB) * 100).toFixed(2);
 };
 
 const runReports = async () => {
