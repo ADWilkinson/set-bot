@@ -108,3 +108,4 @@ build/
 .firebase/hosting.*.cache
 report/*
 scrapingData/*
+config.js
